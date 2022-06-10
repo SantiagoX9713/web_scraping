@@ -21,21 +21,14 @@ class QuotesScraper(scrapy.Spider):
         title = response.xpath('//h1/a/text()').get()
         quotes = response.xpath('//span[@class="text" and @itemprop="text"]/text()').getall()
         top_ten_tags = response.xpath('//div[contains(@class, "tags-box")]//span[@class="tag-item"]/a/text()').getall()
-        print('*'*50)
-        print('\n\n')
-        # print(response.status, reponse.headers)
-        print(f' El Titulo de la página es: {title}')
-        print('\n\n')
-        print('*'*50)
-        print('*'*50)
-        print('\n\n')
-        for quote in quotes:
-            print(f'- {quote}')
-        print('\n\n')
-        print('*'*50)
-        print('*'*50)
-        print('\n\n')
-        for tag in top_ten_tags:
-            print(f'- {tag}')
-        print('\n\n')
-        print('*'*50)
+        
+
+        yield {
+            'title': title,
+            'quotes': quotes,
+            'top_ten_tags': top_ten_tags
+        }
+
+        # Para guardar en consola es:
+        # scrapy crawl quotes -o quotes.json Para guardar en JSON
+        # scrapy crawl quotes -o quotes.csv Para guardar en CSV
